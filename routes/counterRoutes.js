@@ -4,6 +4,7 @@ const counterRouter = express.Router();
 const { Counter } = require("../model/counterModel");
 const messages = require("../utils/messages");
 
+// Endpoint to get the counter
 counterRouter.get("/", async (req, res) => {
   try {
     const counter = await Counter.findOne();
@@ -30,6 +31,8 @@ counterRouter.get("/", async (req, res) => {
   }
 });
 
+
+// Endpoint to reset the counter
 counterRouter.put("/reset", async (req, res) => {
   try {
     const counter = await Counter.findOneAndUpdate(
