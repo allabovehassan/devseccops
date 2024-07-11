@@ -13,6 +13,6 @@ const counterSchema = Schema(
   }
 );
 
-const Counter = model("RegisteredUser", counterSchema);
+const Counter = model("Counter", counterSchema);
 
 module.exports = { Counter };
