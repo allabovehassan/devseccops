@@ -2,7 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const counterRouter = express.Router();
 const { Counter } = require("../model/counterModel");
-const messages = require("../utils/messages")
+const messages = require("../utils/messages");
 
 counterRouter.get("/", async (req, res) => {
   try {
@@ -20,6 +20,30 @@ counterRouter.get("/", async (req, res) => {
       success: false,
       message: messages.COUNT_NOT_FOUND,
       data: null
+    });
+  } catch (error) {
+    return res.status(500).send({
+      success: false,
+      message: messages.SERVER_ERROR,
+      data: JSON.stringify(error)
+    });
+  }
+});
+
+counterRouter.put("/reset", async (req, res) => {
+  try {
+    const counter = await Counter.findOneAndUpdate(
+      {},
+      { count: 0 },
+      { new: true, upsert: true }
+    );
+
+    return res.status(200).send({
+      success: true,
+      message: messages.COUNTER_RESET,
+      data: {
+        count: counter.count
+      }
     });
   } catch (error) {
     return res.status(500).send({
